@@ -8,12 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		4F3213612AE0F82800EF7AD3 /* VaultoramaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3213602AE0F82800EF7AD3 /* VaultoramaApp.swift */; };
-		4F3213632AE0F82800EF7AD3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3213622AE0F82800EF7AD3 /* ContentView.swift */; };
+		4F3213632AE0F82800EF7AD3 /* SplitNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3213622AE0F82800EF7AD3 /* SplitNavigationView.swift */; };
 		4F3213652AE0F82A00EF7AD3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F3213642AE0F82A00EF7AD3 /* Assets.xcassets */; };
 		4F3213682AE0F82A00EF7AD3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F3213672AE0F82A00EF7AD3 /* Preview Assets.xcassets */; };
 		4F3213732AE0F82A00EF7AD3 /* VaultoramaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3213722AE0F82A00EF7AD3 /* VaultoramaTests.swift */; };
 		4F32137D2AE0F82A00EF7AD3 /* VaultoramaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32137C2AE0F82A00EF7AD3 /* VaultoramaUITests.swift */; };
 		4F32137F2AE0F82A00EF7AD3 /* VaultoramaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32137E2AE0F82A00EF7AD3 /* VaultoramaUITestsLaunchTests.swift */; };
+		4F32138D2AE0FA7C00EF7AD3 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32138C2AE0FA7C00EF7AD3 /* MockData.swift */; };
+		4F32138F2AE0FD9D00EF7AD3 /* VaultDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32138E2AE0FD9D00EF7AD3 /* VaultDataModel.swift */; };
+		4F3213922AE1327C00EF7AD3 /* VaultListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3213912AE1327C00EF7AD3 /* VaultListItemView.swift */; };
+		4FA568A02AEF96D300B3C54D /* Vault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA5689F2AEF96D300B3C54D /* Vault.swift */; };
+		4FA568A32AEFE5EB00B3C54D /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA568A22AEFE5EB00B3C54D /* Home.swift */; };
+		4FA568A62AEFEB2500B3C54D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA568A52AEFEB2500B3C54D /* ContentView.swift */; };
+		4FCCB9CE2AF28FA8003470C6 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCCB9CD2AF28FA8003470C6 /* LocalFileManager.swift */; };
+		4FCCB9D22AF29824003470C6 /* AppLauncView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCCB9D12AF29824003470C6 /* AppLauncView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +44,7 @@
 /* Begin PBXFileReference section */
 		4F32135D2AE0F82800EF7AD3 /* Vaultorama.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vaultorama.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F3213602AE0F82800EF7AD3 /* VaultoramaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultoramaApp.swift; sourceTree = "<group>"; };
-		4F3213622AE0F82800EF7AD3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4F3213622AE0F82800EF7AD3 /* SplitNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitNavigationView.swift; sourceTree = "<group>"; };
 		4F3213642AE0F82A00EF7AD3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F3213672AE0F82A00EF7AD3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4F3213692AE0F82A00EF7AD3 /* Vaultorama.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Vaultorama.entitlements; sourceTree = "<group>"; };
@@ -45,6 +53,14 @@
 		4F3213782AE0F82A00EF7AD3 /* VaultoramaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VaultoramaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F32137C2AE0F82A00EF7AD3 /* VaultoramaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultoramaUITests.swift; sourceTree = "<group>"; };
 		4F32137E2AE0F82A00EF7AD3 /* VaultoramaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultoramaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		4F32138C2AE0FA7C00EF7AD3 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		4F32138E2AE0FD9D00EF7AD3 /* VaultDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultDataModel.swift; sourceTree = "<group>"; };
+		4F3213912AE1327C00EF7AD3 /* VaultListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultListItemView.swift; sourceTree = "<group>"; };
+		4FA5689F2AEF96D300B3C54D /* Vault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vault.swift; sourceTree = "<group>"; };
+		4FA568A22AEFE5EB00B3C54D /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		4FA568A52AEFEB2500B3C54D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4FCCB9CD2AF28FA8003470C6 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
+		4FCCB9D12AF29824003470C6 /* AppLauncView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLauncView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,8 +111,12 @@
 		4F32135F2AE0F82800EF7AD3 /* Vaultorama */ = {
 			isa = PBXGroup;
 			children = (
+				4FCCB9CC2AF28DFC003470C6 /* Helpers */,
+				4F32138B2AE0F98C00EF7AD3 /* Views */,
+				4FA5689E2AEF96BA00B3C54D /* Model */,
+				4F3213902AE1326800EF7AD3 /* Cells */,
 				4F3213602AE0F82800EF7AD3 /* VaultoramaApp.swift */,
-				4F3213622AE0F82800EF7AD3 /* ContentView.swift */,
+				4FA568A52AEFEB2500B3C54D /* ContentView.swift */,
 				4F3213642AE0F82A00EF7AD3 /* Assets.xcassets */,
 				4F3213692AE0F82A00EF7AD3 /* Vaultorama.entitlements */,
 				4F3213662AE0F82A00EF7AD3 /* Preview Content */,
@@ -127,6 +147,42 @@
 				4F32137E2AE0F82A00EF7AD3 /* VaultoramaUITestsLaunchTests.swift */,
 			);
 			path = VaultoramaUITests;
+			sourceTree = "<group>";
+		};
+		4F32138B2AE0F98C00EF7AD3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4F3213622AE0F82800EF7AD3 /* SplitNavigationView.swift */,
+				4F32138C2AE0FA7C00EF7AD3 /* MockData.swift */,
+				4FA568A22AEFE5EB00B3C54D /* Home.swift */,
+				4FCCB9D12AF29824003470C6 /* AppLauncView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4F3213902AE1326800EF7AD3 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				4F3213912AE1327C00EF7AD3 /* VaultListItemView.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		4FA5689E2AEF96BA00B3C54D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4F32138E2AE0FD9D00EF7AD3 /* VaultDataModel.swift */,
+				4FA5689F2AEF96D300B3C54D /* Vault.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4FCCB9CC2AF28DFC003470C6 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4FCCB9CD2AF28FA8003470C6 /* LocalFileManager.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,8 +315,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F3213632AE0F82800EF7AD3 /* ContentView.swift in Sources */,
+				4FCCB9D22AF29824003470C6 /* AppLauncView.swift in Sources */,
+				4F3213632AE0F82800EF7AD3 /* SplitNavigationView.swift in Sources */,
+				4F32138D2AE0FA7C00EF7AD3 /* MockData.swift in Sources */,
+				4FCCB9CE2AF28FA8003470C6 /* LocalFileManager.swift in Sources */,
+				4F32138F2AE0FD9D00EF7AD3 /* VaultDataModel.swift in Sources */,
+				4F3213922AE1327C00EF7AD3 /* VaultListItemView.swift in Sources */,
 				4F3213612AE0F82800EF7AD3 /* VaultoramaApp.swift in Sources */,
+				4FA568A62AEFEB2500B3C54D /* ContentView.swift in Sources */,
+				4FA568A02AEF96D300B3C54D /* Vault.swift in Sources */,
+				4FA568A32AEFE5EB00B3C54D /* Home.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,20 +1,43 @@
+////
+////  ContentView.swift
+////  Vaultorama
+////
+////  Created by Olivier Guillemot on 19/10/2023.
+////
 //
-//  ContentView.swift
-//  Vaultorama
+//import SwiftUI
+//import SwiftData
 //
-//  Created by Olivier Guillemot on 19/10/2023.
+//struct SplitNavigationView: View {
+//    
+////    @EnvironmentObject var dataModel: VaultDataModel
+////    @State private var vaultIds: Set<Vault.ID> = []
+// 
+//    
+//    @Query(animation: .snappy) private var vaults: [Vault]
+//    
+//    var body: some View {
+//        NavigationSplitView {
+//            List(vaults ) { vault in
+//                VaultListItemView(vault: vault)
+//            }
+//            .navigationSplitViewColumnWidth(300)
+//            .listStyle(.plain)
+//            
+//        } detail: {
+//            
+//        Image("sample-image")
+//                .resizable()
+//                .frame(width: 300, height: 200)
+//                .aspectRatio(contentMode: .fit)
+//            
+//        }
+//    }
+//}
 //
-
-import SwiftUI
-
-struct SplitNavigationView: View {
-    var body: some View {
-        NavigationSplitView {
-            
-        }
-    }
-}
-
-#Preview {
-    SplitNavigationView()
-}
+//#Preview {
+//    SplitNavigationView().environmentObject(VaultDataModel())
+//}
+//
+//
+//

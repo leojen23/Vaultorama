@@ -1,18 +1,18 @@
-//
-//  ContentView.swift
-//  Vaultorama
-//
-//  Created by Olivier Guillemot on 30/10/2023.
-//
-
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
+    
+    @AppStorage("rootDirectory") private var rootDirectory: String?
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        if rootDirectory != nil{
+            Home()
+        } else {
+            AppLaunchView()
+        }
     }
 }
-
 #Preview {
     ContentView()
 }

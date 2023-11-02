@@ -1,18 +1,42 @@
-//
-//  AppLauncView.swift
-//  Vaultorama
-//
-//  Created by Olivier Guillemot on 01/11/2023.
-//
 
 import SwiftUI
 
-struct AppLauncView: View {
+struct AppLaunchView: View {
+    @AppStorage("rootDirectory") private var rootDirectory: String?
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack () {
+            Image("vaultorama-bg")
+                .resizable()
+                .scaledToFill()
+                .overlay(LinearGradient(gradient: Gradient(colors: [.clear, .black]),
+                                       startPoint: .top,
+                                       endPoint: .bottom)
+            )
+            
+            VStack(alignment: .trailing) {
+                Spacer()
+                Text("Vaultorama")
+                    .font(.system(size: 70))
+                Text("Keep your data safe !")
+                    .font(.title)
+                Spacer()
+                Button("Create Root Directory") {
+                   LocalFileManager.instance.setRootDirectory()
+                }
+                .controlSize(.large)
+                .buttonStyle(.borderedProminent)
+                Spacer()
+            }
+//            .frame(maxWidth: .infinity)
+            .frame(maxWidth: 350, maxHeight: 400)
+            .padding(.horizontal, 100)
+            .background(.opacity(0.1))
+            .cornerRadius(10)
+        }
     }
 }
-
+    
 #Preview {
-    AppLauncView()
+    ContentView()
 }

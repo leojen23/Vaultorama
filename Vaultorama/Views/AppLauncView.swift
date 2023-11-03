@@ -2,7 +2,7 @@
 import SwiftUI
 
 struct AppLaunchView: View {
-    @AppStorage("rootDirectory") private var rootDirectory: String?
+    
     
     var body: some View {
         ZStack () {
@@ -13,7 +13,6 @@ struct AppLaunchView: View {
                                        startPoint: .top,
                                        endPoint: .bottom)
             )
-            
             VStack(alignment: .trailing) {
                 Spacer()
                 Text("Vaultorama")
@@ -21,14 +20,13 @@ struct AppLaunchView: View {
                 Text("Keep your data safe !")
                     .font(.title)
                 Spacer()
-                Button("Create Root Directory") {
+                Button("Let's start !") {
                    LocalFileManager.instance.setRootDirectory()
                 }
                 .controlSize(.large)
                 .buttonStyle(.borderedProminent)
                 Spacer()
             }
-//            .frame(maxWidth: .infinity)
             .frame(maxWidth: 350, maxHeight: 400)
             .padding(.horizontal, 100)
             .background(.opacity(0.1))

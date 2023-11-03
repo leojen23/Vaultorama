@@ -11,13 +11,13 @@ import SwiftData
 
 struct Home: View {
     
+    @AppStorage("rootDirURL") private var rootDirURL: URL?
     @Environment(\.modelContext) private var modelContext
-    
     @Query(animation: .snappy) private var vaults: [Vault]
+    
     @State private var vaultId: Vault.ID?
     @State private var showingAlert = false
     @State private var name = ""
-    @AppStorage("rootDirectory") private var rootDirectory: String?
 
     var body: some View {
         
@@ -48,12 +48,12 @@ struct Home: View {
             Spacer()
         
             Button(action: {
-                reloadSampleData(modelContext: modelContext)
+                deleteAllVault(modelContext: modelContext)
             }, label: {
                 Text("delete All")
             })
             Button(action: {
-                rootDirectory = nil
+                rootDirURL = nil
             }, label: {
                 Text("restore root dir")
             })
@@ -70,7 +70,7 @@ struct Home: View {
         
     }
     
-     func reloadSampleData(modelContext: ModelContext) {
+     func deleteAllVault(modelContext: ModelContext) {
         do {
             try modelContext.delete(model: Vault.self)
         } catch {
@@ -78,41 +78,14 @@ struct Home: View {
         }
     }
     
-    
-    func removeAllVault(at indexSet: IndexSet) {
-        for index in indexSet {
-            modelContext.delete(vaults[index])
-        }
-    }
-    
     func addVault(_ name: String) {
-        let fileManager = FileManager.default
-        let rootDirectoryPath: String = rootDirectory ?? ""
-        let newDirectoryPath: String = "\(rootDirectoryPath)/\(name)"
-        do {
-            try fileManager.createDirectory(atPath: newDirectoryPath, withIntermediateDirectories: false, attributes: nil)
-            print("done")
-            if name != "" {
-                let item = Vault(name: name)
-                modelContext.insert(item)
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-       
+        LocalFileManager.instance.createDirectory(name)
+        let dirURL: URL = LocalFileManager.instance.getDirectory(name)
+        let newVault: Vault = Vault(name: name, url: dirURL)
+        modelContext.insert(newVault)
     }
     
 }
-
-//struct DetailView: View {
-//    
-//    
-//    var body: some View {
-//        Text()
-//    }
-//}
-
 
 #Preview {
     ContentView()

@@ -3,10 +3,10 @@ import SwiftData
 
 struct ContentView: View {
     
-    @AppStorage("rootDirectory") private var rootDirectory: String?
+    @AppStorage("rootDirURL") private var rootDirURL: URL?
     
     var body: some View {
-        if rootDirectory != nil{
+        if rootDirURL != nil{
             Home()
         } else {
             AppLaunchView()

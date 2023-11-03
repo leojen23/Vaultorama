@@ -12,8 +12,11 @@ struct VaultoramaApp: App {
         }
         .modelContainer(for: Vault.self)
         .windowResizability(.contentSize)
+        
     }
 }
+
+
 
 #Preview {
     ContentView()

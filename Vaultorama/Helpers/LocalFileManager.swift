@@ -1,9 +1,3 @@
-//
-//  LocalFileManager.swift
-//  Vaultorama
-//
-//  Created by Olivier Guillemot on 01/11/2023.
-//
 
 import SwiftUI
 
@@ -11,30 +5,45 @@ import SwiftUI
 class LocalFileManager {
     
     static let instance = LocalFileManager()
+    private let dialog: NSOpenPanel = NSOpenPanel()
+    private let fm: FileManager = FileManager.default
     
-    @AppStorage("rootDirectory") private var rootDirectory: String?
+    @AppStorage("rootDirURL") private var rootDirURL: URL?
+    var isDirectory: ObjCBool = false
+   
     
-    func setRootDirectory() {
-        let dialog = NSOpenPanel()
-
-        dialog.message                 = "Choose the root Directory of your application"
-        dialog.showsResizeIndicator    = true
-        dialog.showsHiddenFiles        = false
-        dialog.canChooseFiles          = false
-        dialog.canChooseDirectories    = true
-        dialog.canCreateDirectories = true
-        dialog.allowsMultipleSelection = false
-
-        if (dialog.runModal() ==  NSApplication.ModalResponse.OK) {
-            let result = dialog.url
-            if (result != nil) {
-                let path: String = result!.path
-                rootDirectory = path
-            }
-        } else {
-            // User clicked on "Cancel"
+    func setRootDirectory(){
+      
+        let pictureDirectory: URL = try! fm.url(for: .picturesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        let rootDirectoryURL: URL = pictureDirectory.appendingPathComponent("Vaultorama")
+        
+        guard fm.fileExists(atPath: rootDirectoryURL.path, isDirectory: &isDirectory) && isDirectory.boolValue else {
             
+            do {
+                try fm.createDirectory(at: rootDirectoryURL, withIntermediateDirectories: true)
+                rootDirURL = rootDirectoryURL
+            } catch {
+                print("An error occurred: \(error)")
+            }
+            return
         }
-       
+        return
+    }
+    
+    func createDirectory(_ dirName: String) {
+        do {
+            guard let rootDirectoryURL = rootDirURL else {
+                return
+            }
+            try fm.createDirectory(at: rootDirectoryURL.appendingPathComponent(dirName), withIntermediateDirectories: false)
+        } catch {
+            print(error.localizedDescription)
+            return
+        }
+    }
+    
+    func getDirectory(_ dirName: String) -> URL {
+        return rootDirURL!.appendingPathComponent(dirName)
     }
 }
+

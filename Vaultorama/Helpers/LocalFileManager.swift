@@ -1,5 +1,6 @@
 
 import SwiftUI
+import SwiftData
 
 
 class LocalFileManager {
@@ -9,6 +10,8 @@ class LocalFileManager {
     private let fm: FileManager = FileManager.default
     
     @AppStorage("rootDirURL") private var rootDirURL: URL?
+    @Environment(\.modelContext) private var modelContext
+    @Query(animation: .snappy) private var vaults: [Vault]
     var isDirectory: ObjCBool = false
    
     
@@ -45,5 +48,27 @@ class LocalFileManager {
     func getDirectory(_ dirName: String) -> URL {
         return rootDirURL!.appendingPathComponent(dirName)
     }
+    
+    func getAllDirectories() -> [URL]{
+        do {
+            let directories: [URL] = try fm.contentsOfDirectory(at: rootDirURL!, includingPropertiesForKeys: nil).filter { $0.isDirectory}
+           
+            return directories
+        } catch {
+            print(error.localizedDescription)
+        }
+        return []
+    }
+    
+//    func getDirectoryAttributes(_ dirURL: URL) -> [FileAttributeKey: Any]? {
+//        do {
+//            let attr = try fm.attributesOfItem(atPath: dirURL.path)
+//            print(attr)
+//            return attr
+//        } catch {
+//            print(error.localizedDescription)
+//            return nil
+//        }
+//    }
 }
 

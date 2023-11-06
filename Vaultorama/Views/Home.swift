@@ -22,6 +22,17 @@ struct Home: View {
     var body: some View {
         
         NavigationSplitView() {
+            
+            HStack(alignment: .top) {
+                Spacer()
+                Button {
+                    synchroniseVaults()
+                } label : {
+                    Image(systemName: "arrow.triangle.2.circlepath")
+                }.buttonStyle(.borderless)
+                
+            }
+            .padding()
 
             List (vaults, selection: $vaultId) { vault in
                 HStack {
@@ -81,8 +92,22 @@ struct Home: View {
     func addVault(_ name: String) {
         LocalFileManager.instance.createDirectory(name)
         let dirURL: URL = LocalFileManager.instance.getDirectory(name)
+//        let attr = LocalFileManager.instance.getDirectoryAttributes(dirURL)
         let newVault: Vault = Vault(name: name, url: dirURL)
         modelContext.insert(newVault)
+    }
+    
+    func synchroniseVaults() {
+        let dirs: [URL] = LocalFileManager.instance.getAllDirectories()
+        if dirs.isEmpty {
+            return
+        }
+        deleteAllVault(modelContext: modelContext)
+        for dir in dirs {
+//            let attr = LocalFileManager.instance.getDirectoryAttributes(dir)
+            let vault: Vault = Vault( name: dir.lastPathComponent.lowercased(), url: dir)
+            modelContext.insert(vault)
+        }
     }
     
 }

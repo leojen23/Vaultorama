@@ -92,8 +92,7 @@ struct Home: View {
     func addVault(_ name: String) {
         LocalFileManager.instance.createDirectory(name)
         let dirURL: URL = LocalFileManager.instance.getDirectory(name)
-//        let attr = LocalFileManager.instance.getDirectoryAttributes(dirURL)
-        let newVault: Vault = Vault(name: name, url: dirURL)
+        let newVault: Vault = Vault(url: dirURL)
         modelContext.insert(newVault)
     }
     
@@ -103,9 +102,8 @@ struct Home: View {
             return
         }
         deleteAllVault(modelContext: modelContext)
-        for dir in dirs {
-//            let attr = LocalFileManager.instance.getDirectoryAttributes(dir)
-            let vault: Vault = Vault( name: dir.lastPathComponent.lowercased(), url: dir)
+        for dirURL in dirs {
+            let vault: Vault = Vault(url: dirURL)
             modelContext.insert(vault)
         }
     }

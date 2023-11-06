@@ -15,6 +15,17 @@ class LocalFileManager {
     var isDirectory: ObjCBool = false
    
     
+    
+    func getDirectoryItemCount(_ dirURL: URL) -> Int {
+        do {
+            let count: Int = try fm.contentsOfDirectory(at: dirURL, includingPropertiesForKeys: nil).count
+            return count
+        } catch {
+            print(error.localizedDescription)
+        }
+        return 0
+    }
+    
     func setRootDirectory(){
       
         let pictureDirectory: URL = try! fm.url(for: .picturesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
@@ -51,8 +62,8 @@ class LocalFileManager {
     
     func getAllDirectories() -> [URL]{
         do {
-            let directories: [URL] = try fm.contentsOfDirectory(at: rootDirURL!, includingPropertiesForKeys: nil).filter { $0.isDirectory}
-           
+            let vaultResourceKeys: [URLResourceKey] = [.nameKey, .fileSizeKey, .creationDateKey, .pathKey, .volumeURLKey]
+            let directories: [URL] = try fm.contentsOfDirectory(at: rootDirURL!, includingPropertiesForKeys: vaultResourceKeys).filter { $0.isDirectory}
             return directories
         } catch {
             print(error.localizedDescription)

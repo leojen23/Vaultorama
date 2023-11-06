@@ -5,35 +5,26 @@ import SwiftData
 class Vault: Identifiable {
     
     let id: String
-    let name: String
     let url: URL
     
     
-    init(name: String, url: URL) {
+    init(url: URL) {
         self.id = UUID().uuidString
-        self.name = name
         self.url = url
-      
     }
     
-    var nameString: String {
-        get { return url.lastPathComponent }
+    var name: String {
+        get { return url.fileName! }
     }
-
-//
-//    var cover: String {
-//        get { return url.description }
-//    }
+    
+    var size: String {
+        get { return url.fileSizeString }
+    }
+    
+    var count: Int {
+        get { return LocalFileManager.instance.getDirectoryItemCount(self.url) }
+    }
     
 }
 
-
-class VaultAttributes {
-    
-    let values:[String]
-    
-    init(values: [String]) {
-        self.values = values
-    }
-}
 

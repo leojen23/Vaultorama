@@ -15,7 +15,14 @@ struct VaultListItemView: View {
                 
                 Spacer()
             
-                Label("0", systemImage: "photo")
+                Label("\(vault.count)", systemImage: "photo")
+                    .padding(.vertical,2)
+                    .padding(.horizontal,5)
+                    .background(.selection)
+                    .clipShape(.capsule)
+                    .font(.caption)
+                
+                Label(vault.size, systemImage: "simcard")
                     .padding(.vertical,2)
                     .padding(.horizontal,5)
                     .background(.selection)

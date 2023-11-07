@@ -15,7 +15,8 @@ struct Home: View {
     @Environment(\.modelContext) private var modelContext
     @Query(animation: .snappy) private var vaults: [Vault]
     
-    @State private var vaultId: Vault.ID?
+//    @State private var vaultId: Vault.ID?
+    @State private var selectedVault: Vault?
     @State private var showingAlert = false
     @State private var name = ""
 
@@ -34,12 +35,20 @@ struct Home: View {
             }
             .padding()
 
-            List (vaults, selection: $vaultId) { vault in
+            
+            
+            List (vaults, id:\.self, selection: $selectedVault) { vault in
                 HStack {
                     VaultListItemView(vault: vault)
                 }
         
             }
+            .navigationTitle("List")
+            
+            
+            
+            
+            
             Spacer()
             
             Button("Add Vault item") {
@@ -71,13 +80,14 @@ struct Home: View {
             .navigationSplitViewColumnWidth(
                             min: 250, ideal: 220, max: 400)
         } detail: {
-//            if let vaultId = vaultId {
-//                Text("\(vaultId)")
-//            } else {
-//                Text("no id")
-//            }
+           
+            if let selectedVault = selectedVault  {
+                VaultDetailView(vault: selectedVault)
+            } else {
+                Text("no Vault")
+            }
         }
-        .navigationTitle("VAULT")
+        .navigationTitle(selectedVault?.name ?? "No vault selected")
         
     }
     
@@ -104,7 +114,7 @@ struct Home: View {
         deleteAllVault(modelContext: modelContext)
         for dirURL in dirs {
             let vault: Vault = Vault(url: dirURL)
-            modelContext.insert(vault)
+          modelContext.insert(vault)
         }
     }
     

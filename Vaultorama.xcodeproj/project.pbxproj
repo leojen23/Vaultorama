@@ -22,6 +22,8 @@
 		4FCCB9CE2AF28FA8003470C6 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCCB9CD2AF28FA8003470C6 /* LocalFileManager.swift */; };
 		4FCCB9D22AF29824003470C6 /* AppLauncView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCCB9D12AF29824003470C6 /* AppLauncView.swift */; };
 		4FCCB9D72AF54128003470C6 /* URL+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCCB9D62AF54128003470C6 /* URL+ext.swift */; };
+		4FCCB9DB2AFA3CFA003470C6 /* VaultDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCCB9DA2AFA3CFA003470C6 /* VaultDetailView.swift */; };
+		4FCCB9DD2AFA6AC5003470C6 /* GridItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCCB9DC2AFA6AC5003470C6 /* GridItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		4FCCB9CD2AF28FA8003470C6 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
 		4FCCB9D12AF29824003470C6 /* AppLauncView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLauncView.swift; sourceTree = "<group>"; };
 		4FCCB9D62AF54128003470C6 /* URL+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+ext.swift"; sourceTree = "<group>"; };
+		4FCCB9DA2AFA3CFA003470C6 /* VaultDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultDetailView.swift; sourceTree = "<group>"; };
+		4FCCB9DC2AFA6AC5003470C6 /* GridItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +160,7 @@
 				4F3213622AE0F82800EF7AD3 /* SplitNavigationView.swift */,
 				4FA568A22AEFE5EB00B3C54D /* Home.swift */,
 				4FCCB9D12AF29824003470C6 /* AppLauncView.swift */,
+				4FCCB9DA2AFA3CFA003470C6 /* VaultDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -164,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				4F3213912AE1327C00EF7AD3 /* VaultListItemView.swift */,
+				4FCCB9DC2AFA6AC5003470C6 /* GridItemView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -323,6 +329,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FCCB9DB2AFA3CFA003470C6 /* VaultDetailView.swift in Sources */,
+				4FCCB9DD2AFA6AC5003470C6 /* GridItemView.swift in Sources */,
 				4FCCB9D22AF29824003470C6 /* AppLauncView.swift in Sources */,
 				4F3213632AE0F82800EF7AD3 /* SplitNavigationView.swift in Sources */,
 				4FCCB9CE2AF28FA8003470C6 /* LocalFileManager.swift in Sources */,

@@ -25,6 +25,21 @@ class Vault: Identifiable {
         get { return LocalFileManager.instance.getDirectoryItemCount(self.url) }
     }
     
+    var files: [URL] {
+        get { return LocalFileManager.instance.getFiles(url) }
+    }
+    
+}
+
+class FileItem {
+    
+    let id: String
+    let url: URL
+    
+    init(url: URL) {
+        self.id = UUID().uuidString
+        self.url = url
+    }
 }
 
 

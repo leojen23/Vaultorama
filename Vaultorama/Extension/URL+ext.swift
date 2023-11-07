@@ -4,7 +4,7 @@ import SwiftUI
 extension URL {
     
     var isDirectory: Bool {
-       (try? resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory == true
+        (try? resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory == true
     }
     
     var isImage: Bool {
@@ -26,15 +26,20 @@ extension URL {
     }
     
     var fileSizeString: String {
-        return ByteCountFormatter.string(fromByteCount: Int64(fileSize), countStyle: .file)
+        let emptyDirSize: Int = 64
+        let size: Int64 = Int64(fileSize) - Int64(emptyDirSize)
+        if(size == 0){
+            return "Empty"
+        }
+        return ByteCountFormatter.string(fromByteCount: Int64(size), countStyle: .decimal)
     }
     
     var creationDate: Date? {
         return attributes?[.creationDate] as? Date
     }
-        
+    
     var fileName: String? {
         return self.lastPathComponent
-        }
+    }
+    
 }
-

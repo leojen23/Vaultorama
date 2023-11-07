@@ -15,10 +15,9 @@ class LocalFileManager {
     var isDirectory: ObjCBool = false
    
     
-    
     func getDirectoryItemCount(_ dirURL: URL) -> Int {
         do {
-            let count: Int = try fm.contentsOfDirectory(at: dirURL, includingPropertiesForKeys: nil).count
+            let count: Int = try fm.contentsOfDirectory(at: dirURL, includingPropertiesForKeys: nil).filter {$0.isImage}.count
             return count
         } catch {
             print(error.localizedDescription)
@@ -71,15 +70,14 @@ class LocalFileManager {
         return []
     }
     
-//    func getDirectoryAttributes(_ dirURL: URL) -> [FileAttributeKey: Any]? {
-//        do {
-//            let attr = try fm.attributesOfItem(atPath: dirURL.path)
-//            print(attr)
-//            return attr
-//        } catch {
-//            print(error.localizedDescription)
-//            return nil
-//        }
-//    }
+    func getFiles(_ dirURL: URL) -> [URL] {
+        do{
+            return try fm.contentsOfDirectory(at: dirURL, includingPropertiesForKeys: nil).filter {$0.isImage}
+        } catch {
+            print(error.localizedDescription)
+        }
+        return []
+    }
+    
 }
 

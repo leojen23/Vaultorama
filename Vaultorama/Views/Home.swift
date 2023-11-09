@@ -83,11 +83,14 @@ struct Home: View {
            
             if let selectedVault = selectedVault  {
                 VaultDetailView(vault: selectedVault)
-            } else {
+            } else{
                 Text("no Vault")
             }
         }
         .navigationTitle(selectedVault?.name ?? "No vault selected")
+        .onAppear {
+            synchroniseVaults()
+        }
         
     }
     
@@ -114,10 +117,9 @@ struct Home: View {
         deleteAllVault(modelContext: modelContext)
         for dirURL in dirs {
             let vault: Vault = Vault(url: dirURL)
-          modelContext.insert(vault)
+            modelContext.insert(vault)
         }
     }
-    
 }
 
 #Preview {

@@ -1,12 +1,7 @@
-//
-//  VaultDetailView.swift
-//  Vaultorama
-//
-//  Created by Olivier Guillemot on 07/11/2023.
-//
 
 import SwiftUI
 import SwiftData
+
 
 struct VaultDetailView: View {
     
@@ -27,123 +22,103 @@ struct GridView: View {
     init(vault: Vault) {
         self.vault = vault
     }
-
-    private static var initialColumns = 2
+   
+    private static var initialColumns = 10
+    @State private var numColumns: Double = Double(initialColumns)
     @State private var isEditing = false
     @State private var isOn: Bool = false
-
-    @State private var gridColumns = Array(repeating: GridItem(.flexible()), count: initialColumns)
-    @State private var numColumns: Double = Double(initialColumns)
+    @State private var isGridView: Bool = true
+    @State private var isListView: Bool = false
 
     var body: some View {
         VStack {
-//            if isEditing {
-//                ColumnStepper(title: columnsTitle, range: 1...8, columns: $gridColumns)
-//                .padding()
-//            }
-            ScrollView {
-                LazyVGrid(columns: gridColumns) {
-                    ForEach(vault.files, id:\.fileName) { item in
-                        GeometryReader { geo in
-                            GridItemView(size: geo.size.width, file: item )
-                        }
-                        .cornerRadius(8.0)
-                        .aspectRatio(1, contentMode: .fit)
-                        .overlay(alignment: .topTrailing) {
-                            if isEditing {
-                                Button {
-                                    withAnimation {
-//                                        dataModel.removeItem(item)
-                                    }
-                                } label: {
-                                    Image(systemName: "xmark.square.fill")
-                                                .font(Font.title)
-                                                .symbolRenderingMode(.palette)
-                                                .foregroundStyle(.white, .red)
+            if !vault.files.isEmpty{
+                ScrollView {
+                    if isGridView {
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: Int(numColumns))) {
+                            ForEach(vault.files, id:\.fileName) { item in
+                                GeometryReader { geo in
+                                    GridItemView(size: geo.size.width, file: item )
                                 }
-                                .offset(x: 7, y: -7)
+                                .cornerRadius(8.0)
+                                .aspectRatio(1, contentMode: .fit)
+                                .overlay(alignment: .topTrailing) {
+                                    if isEditing {
+                                        Button {
+                                            withAnimation {
+        //                                     dataModel.removeItem(item)
+                                            }
+                                        } label: {
+                                            Image(systemName: "xmark.square.fill")
+                                                        .font(Font.title)
+                                                        .symbolRenderingMode(.palette)
+                                                        .foregroundStyle(.white, .red)
+                                        }
+                                        .offset(x: 7, y: -7)
+                                    }
+                                }
                             }
                         }
+                        .padding()
                     }
+                    if isListView {
+                        Text("List View")
+                    }
+                    
+                }
+            }
+            else {
+                
+                Button("Add Files", systemImage: "photo.on.rectangle") {
+                    print("Add files")
                 }
                 .padding()
+                .buttonStyle(.bordered)
+                .controlSize(.large)
+                .tint(Color.accentColor)
+                
             }
+            
         }
-        .toolbar{
-            ToolbarItemGroup{
-//                Toggle(isOn: $isGridLayout) {
-//                    Image(systemName: "square.grid.2x2.fill")
-//                }
-//                Spacer()
-//                Slider(
-//                    value: $numColumns,
-//                    in: 2...10,
-//                    step: 1,
-//                    minimumValueLabel:
-//                        Text("0").font(.system(size: 10)),
-//                    maximumValueLabel:
-//                        Text("10").font(.system(size: 14)),
-//                    onEditingChanged: <#T##(Bool) -> Void#>
-//                ) {
-//                    Text("Font Size (\(Int(numColumns)))")
-//                }
-                VStack{
+        .toolbar() {
+            
+            ToolbarItemGroup (placement: .navigation){
+                
+                Toggle(isOn: $isGridView) {
+                    Image(systemName: "square.grid.2x2")
+                }.onChange(of: isListView) { oldValue, newValue in
+                    if newValue {
+                        isGridView = false
+                    }
+                }
+                
+                Toggle(isOn: $isListView) {
+                    Image(systemName: "list.bullet")
+                }.onChange(of: isGridView) { oldValue, newValue in
+                    if newValue {
+                        isListView = false
+                    }
+                }
+            }
+           
+            ToolbarItemGroup (placement: .cancellationAction){
+                HStack{
                     Slider(
                             value: $numColumns,
-                            in: 2...10
+                            in: 2...10,
+                            minimumValueLabel: Text("2"),
+                            maximumValueLabel: Text("10"),
+                            label: {
+                                Text("Values from 0 to 50")
+                            }
                         )
-                    {
-                            Text("Speed")
-                        } minimumValueLabel: {
-                            Text("2")
-                        } maximumValueLabel: {
-                            Text("10")
-                        }
-                    Text("\(Int(numColumns.rounded()))")
-                            .foregroundColor(isEditing ? .red : .blue)
-                    
-                }.frame(width: 150)
-                    
+                        .accentColor(.red)
                 }
-               
-        }.onAppear {
-            gridColumns = Array(repeating: GridItem(.flexible()), count: Int(numColumns))
-            print(numColumns)
-        
-        
-//             ToolbarItem(placement: .secondaryAction) {
-//                 
-//                 HStack {
-//                    Button {
-//                        withAnimation { isGridLayout.toggle() }
-//                    } label : {
-//                        Image(systemName: "square.grid.2x2.fill")
-//                    }.buttonStyle(.borderless)
-//                }
-//            }
-//            ToolbarItem(placement: .primaryAction) {
-//                    HStack {
-//                        Button(isEditing ? "Done" : "Edit") {
-//                            withAnimation { isEditing.toggle() }
-//                        }
-//                            Button {
-//                                isAddingPhoto = true
-//                            } label: {
-//                                Image(systemName: "plus")
-//                            }
-//                            .disabled(isEditing)
-//                    }
-//                
-//            }
-    }
-        
+                .frame(width: 150)
+            }
         }
+    }
 }
-
- 
-
-
-
 
 #Preview {
     ContentView()

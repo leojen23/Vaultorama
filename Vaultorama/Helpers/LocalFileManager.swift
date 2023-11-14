@@ -104,5 +104,18 @@ class LocalFileManager {
         }
     }
     
+    func addFilesToVault(_ files: [URL], _ vault: Vault){
+        do {
+            for selectedFile in files {
+                
+                let destinationURL = vault.url.appendingPathComponent(selectedFile.fileName!)
+                print(destinationURL)
+                try self.fm.copyItem(at: selectedFile, to: destinationURL)
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
 }
 

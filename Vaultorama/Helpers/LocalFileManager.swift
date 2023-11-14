@@ -79,5 +79,30 @@ class LocalFileManager {
         return []
     }
     
+    func addFiles(_ vaultURL: URL) {
+        
+        dialog.message = "Select images"
+        dialog.prompt = "Load"
+        dialog.canChooseFiles = true
+        dialog.canChooseDirectories = false
+        dialog.canCreateDirectories = false
+        dialog.allowsMultipleSelection = true
+
+        dialog.begin { response in
+            if response == .OK, !self.dialog.urls.isEmpty {
+                  
+                do {
+                    for selectedFile in self.dialog.urls {
+                        
+                        let destinationURL = vaultURL.appendingPathComponent(selectedFile.fileName!)
+                        try self.fm.copyItem(at: selectedFile, to: destinationURL)
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
 }
 

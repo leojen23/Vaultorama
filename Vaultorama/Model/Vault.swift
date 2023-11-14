@@ -6,11 +6,12 @@ class Vault: Identifiable {
     
     let id: String
     let url: URL
+    var images: [URL]?
     
-    
-    init(url: URL) {
+    init(url: URL, images: [URL]?) {
         self.id = UUID().uuidString
         self.url = url
+        self.images = images ?? LocalFileManager.instance.getFiles(url)
     }
     
     var name: String {
@@ -27,6 +28,10 @@ class Vault: Identifiable {
     
     var files: [URL] {
         get { return LocalFileManager.instance.getFiles(url) }
+    }
+    
+    func setFiles(_ files: [URL]) {
+        self.images = files
     }
     
 }

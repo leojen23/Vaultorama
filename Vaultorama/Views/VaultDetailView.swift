@@ -22,53 +22,37 @@ struct GridView: View {
     init(vault: Vault) {
         self.vault = vault
     }
-   
+    @Environment(\.modelContext) private var modelContext
     private static var initialColumns = 10
     @State private var numColumns: Double = Double(initialColumns)
     @State private var isEditing = false
     @State private var isOn: Bool = false
     @State private var isGridView: Bool = true
     @State private var isListView: Bool = false
+    @State private var pickedFiles: [URL]?
 
     var body: some View {
         VStack {
-            if !vault.files.isEmpty{
+            if !vault.images!.isEmpty{
                 ScrollView {
                     if isGridView {
-                        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: Int(numColumns))) {
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: Int(numColumns))) {
                             ForEach(vault.files, id:\.fileName) { item in
                                 GeometryReader { geo in
-                                    GridItemView(size: geo.size.width, file: item )
+                                    GridItemView(size: geo.size.width, file: item)
                                 }
-                                .cornerRadius(8.0)
-                                .aspectRatio(1, contentMode: .fit)
-                                .overlay(alignment: .topTrailing) {
-                                    if isEditing {
-                                        Button {
-                                            withAnimation {
-        //                                     dataModel.removeItem(item)
-                                            }
-                                        } label: {
-                                            Image(systemName: "xmark.square.fill")
-                                                        .font(Font.title)
-                                                        .symbolRenderingMode(.palette)
-                                                        .foregroundStyle(.white, .red)
-                                        }
-                                        .offset(x: 7, y: -7)
-                                    }
-                                }
+                                .cornerRadius(6.0)
+                                .scaledToFit()
                             }
                         }
-                        .padding()
                     }
                     if isListView {
                         Text("List View")
                     }
                     
-                }
+                }.padding(10)
             }
             else {
-                
                 Button("Add Files", systemImage: "photo.on.rectangle") {
                     print("Add files")
                 }
@@ -78,7 +62,6 @@ struct GridView: View {
                 .tint(Color.accentColor)
                 
             }
-            
         }
         .toolbar() {
             
@@ -113,12 +96,37 @@ struct GridView: View {
                             }
                         )
                         .accentColor(.red)
+                    Button {
+                        addFiles()
+                       
+                    } label : {
+                        Image(systemName: "folder.badge.plus")
+                    }.buttonStyle(.borderless)
                 }
                 .frame(width: 150)
             }
         }
     }
+    
+    private func addFiles() {
+            let openPanel = NSOpenPanel()
+            openPanel.message = "Select images"
+            openPanel.prompt = "Load"
+            openPanel.allowedFileTypes = ["jpg", "jpeg", "png"] // Add the allowed file types
+            openPanel.canChooseFiles = true
+            openPanel.canChooseDirectories = false
+            openPanel.allowsMultipleSelection = true
+            openPanel.begin { response in
+                if response == .OK, !openPanel.urls.isEmpty {
+                   self.pickedFiles = openPanel.urls
+                    LocalFileManager.instance.addFilesToVault(self.pickedFiles!, vault)
+                    vault.images = self.pickedFiles
+               }
+           }
+       }
 }
+
+
 
 #Preview {
     ContentView()

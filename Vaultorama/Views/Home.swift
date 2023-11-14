@@ -94,7 +94,7 @@ struct Home: View {
         
     }
     
-     func deleteAllVault(modelContext: ModelContext) {
+     private func deleteAllVault(modelContext: ModelContext) {
         do {
             try modelContext.delete(model: Vault.self)
         } catch {
@@ -102,21 +102,21 @@ struct Home: View {
         }
     }
     
-    func addVault(_ name: String) {
+    private func addVault(_ name: String) {
         LocalFileManager.instance.createDirectory(name)
         let dirURL: URL = LocalFileManager.instance.getDirectory(name)
-        let newVault: Vault = Vault(url: dirURL)
+        let newVault: Vault = Vault(url: dirURL, images: nil)
         modelContext.insert(newVault)
     }
     
-    func synchroniseVaults() {
+    private func synchroniseVaults() {
         let dirs: [URL] = LocalFileManager.instance.getAllDirectories()
         if dirs.isEmpty {
             return
         }
         deleteAllVault(modelContext: modelContext)
         for dirURL in dirs {
-            let vault: Vault = Vault(url: dirURL)
+            let vault: Vault = Vault(url: dirURL,images: nil)
             modelContext.insert(vault)
         }
     }

@@ -21,7 +21,7 @@ struct AppLaunchView: View {
                     .font(.title)
                 Spacer()
                 Button("Let's start !") {
-                   LocalFileManager.instance.setRootDirectory()
+                    LocalFileManager.instance.setRootDirectory()
                 }
                 .controlSize(.large)
                 .buttonStyle(.borderedProminent)

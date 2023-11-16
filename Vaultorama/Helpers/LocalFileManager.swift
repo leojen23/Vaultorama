@@ -26,7 +26,6 @@ class LocalFileManager {
     }
     
     func setRootDirectory(){
-      
         let pictureDirectory: URL = try! fm.url(for: .picturesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         let rootDirectoryURL: URL = pictureDirectory.appendingPathComponent("Vaultorama")
         
@@ -35,9 +34,12 @@ class LocalFileManager {
             do {
                 try fm.createDirectory(at: rootDirectoryURL, withIntermediateDirectories: true)
                 rootDirURL = rootDirectoryURL
+                
             } catch {
                 print("An error occurred: \(error)")
             }
+         
+
             return
         }
         return
@@ -115,6 +117,15 @@ class LocalFileManager {
         } catch {
             print(error.localizedDescription)
         }
+    }
+    
+    func deleteDirectory ( _ dir: URL) {
+        do {
+            try fm.removeItem(at: dir)
+        }catch {
+            print(error.localizedDescription)
+        }
+        
     }
     
 }

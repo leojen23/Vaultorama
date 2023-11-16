@@ -3,6 +3,7 @@ import SwiftUI
 struct GridItemView: View {
     
     @State private var isHovered = false
+    @State private var isSelected = false
     
     let size: Double
     let file: URL
@@ -19,39 +20,39 @@ struct GridItemView: View {
             }
         }
         .frame(width: size, height: size)
+        .border(isSelected ? Color.accentColor : Color.clear, width: 3)
         .overlay(
             VStack {
                 if isHovered {
                     VStack {
-                               HStack {
-                                   Spacer(minLength: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
-                                   Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                                      Image(systemName: "hand.thumbsup.fill")
-                                           .foregroundColor(.yellow)
-                                           .padding(8)
-                                           .background(Color.white)
-                                           .cornerRadius(10)
-                                   })
-                                   .buttonStyle(.plain)
+                       HStack {
+                           Spacer(minLength: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
+                           Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                              Image(systemName: "trash")
+                                   .foregroundColor(.white)
+                           })
+                           .buttonStyle(.plain)
+           
+                           Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                              Image(systemName: "eye")
+                                   .foregroundColor(.white)
+                           })
+                           .buttonStyle(.plain)
+                       }.padding(10)
                    
-                                   Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                                      Image(systemName: "folder.fill")
-                                           .foregroundColor(.yellow)
-                                           .padding(8)
-                                           .background(Color.white)
-                                           .cornerRadius(10)
-                                   })
-                                   .buttonStyle(.plain)
-                               }.padding(10)
-                   
-                               Spacer()
-                           }
+           
+                       Spacer()
+                   }
+                    .background(Color.black.opacity(0.4))
 
                 } else {
                     EmptyView()
                 }
             }
         )
+        .onTapGesture {
+            isSelected.toggle()
+        }
         .onHover(perform: { hovering in
                         withAnimation {
                             isHovered = hovering

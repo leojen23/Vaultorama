@@ -23,6 +23,7 @@ struct GridView: View {
         self.vault = vault
     }
     @Environment(\.modelContext) private var modelContext
+    @Query(animation: .snappy) private var vaults: [Vault]
     private static var initialColumns = 10
     @State private var numColumns: Double = Double(initialColumns)
     @State private var isEditing = false
@@ -33,11 +34,11 @@ struct GridView: View {
 
     var body: some View {
         VStack {
-            if !vault.images!.isEmpty{
+            if let files = vault.files, !files.isEmpty{
                 ScrollView {
                     if isGridView {
                         LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: Int(numColumns))) {
-                            ForEach(vault.files, id:\.fileName) { item in
+                            ForEach(files, id:\.fileName) { item in
                                 GeometryReader { geo in
                                     GridItemView(size: geo.size.width, file: item)
                                 }
@@ -100,7 +101,7 @@ struct GridView: View {
                         addFiles()
                        
                     } label : {
-                        Image(systemName: "folder.badge.plus")
+                        Image(systemName: "plus")
                     }.buttonStyle(.borderless)
                 }
                 .frame(width: 150)
@@ -112,22 +113,41 @@ struct GridView: View {
             let openPanel = NSOpenPanel()
             openPanel.message = "Select images"
             openPanel.prompt = "Load"
-            openPanel.allowedFileTypes = ["jpg", "jpeg", "png"] // Add the allowed file types
+            openPanel.allowedFileTypes = ["jpg", "jpeg", "png", "heic"] // Add the allowed file types
             openPanel.canChooseFiles = true
             openPanel.canChooseDirectories = false
             openPanel.allowsMultipleSelection = true
             openPanel.begin { response in
                 if response == .OK, !openPanel.urls.isEmpty {
-                   self.pickedFiles = openPanel.urls
+                    self.pickedFiles = openPanel.urls
                     LocalFileManager.instance.addFilesToVault(self.pickedFiles!, vault)
-                    vault.images = self.pickedFiles
+                    vault.files = LocalFileManager.instance.getFiles(vault.url)
+                    modelContext.insert(vault)
+//                    synchroniseVaults()
                }
            }
        }
+    
+    private func deleteAllVault(modelContext: ModelContext) {
+       do {
+           try modelContext.delete(model: Vault.self)
+       } catch {
+           fatalError(error.localizedDescription)
+       }
+   }
+    
+    private func synchroniseVaults() {
+        let dirs: [URL] = LocalFileManager.instance.getAllDirectories()
+        if dirs.isEmpty {
+            return
+        }
+        deleteAllVault(modelContext: modelContext)
+        for dirURL in dirs {
+            let vault: Vault = Vault(url: dirURL)
+            modelContext.insert(vault)
+        }
+    }
 }
-
-
-
 #Preview {
     ContentView()
 }

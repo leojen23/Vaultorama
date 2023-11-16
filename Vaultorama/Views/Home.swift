@@ -1,9 +1,4 @@
-//
-//  Home.swift
-//  Vaultorama
-//
-//  Created by Olivier Guillemot on 30/10/2023.
-//
+
 
 import SwiftUI
 import SwiftData
@@ -17,7 +12,9 @@ struct Home: View {
     
 //    @State private var vaultId: Vault.ID?
     @State private var selectedVault: Vault?
-    @State private var showingAlert = false
+    @State private var showingAddAlert = false
+    @State private var showingDeletionAlert = false
+    @State private var deletedVault: Vault? = nil
     @State private var name = ""
 
     var body: some View {
@@ -25,36 +22,15 @@ struct Home: View {
         NavigationSplitView() {
             
             HStack(alignment: .top) {
+               
                 Spacer()
-                Button {
-                    synchroniseVaults()
-                } label : {
-                    Image(systemName: "arrow.triangle.2.circlepath")
-                }.buttonStyle(.borderless)
                 
-            }
-            .padding()
-
-            
-            
-            List (vaults, id:\.self, selection: $selectedVault) { vault in
-                HStack {
-                    VaultListItemView(vault: vault)
-                }
-        
-            }
-            .navigationTitle("List")
-            
-            
-            
-            
-            
-            Spacer()
-            
-            Button("Add Vault item") {
-                showingAlert.toggle()
-                    }
-                    .alert("Create new Vault", isPresented: $showingAlert, actions: {
+                Button {
+                    showingAddAlert.toggle()
+                } label : {
+                    Image(systemName: "plus")
+                }.buttonStyle(.borderless)
+                    .alert("Create new Vault", isPresented: $showingAddAlert, actions: {
                         TextField("Vault Name", text: $name, prompt: Text("This field is required"))
                         Button("Create", action: {
                             addVault(name)
@@ -64,14 +40,34 @@ struct Home: View {
                     }, message: {
                         Text("Please give your vault a name.")
                     })
+              
+                Button {
+                    synchroniseVaults()
+                } label : {
+                    Image(systemName: "arrow.triangle.2.circlepath")
+                }.buttonStyle(.borderless)
+            }
+            .padding()
+
+            
+            List (vaults, id:\.self, selection: $selectedVault) { vault in
+                HStack {
+                    VaultListItemView(vault: vault)
+                }
+                .contextMenu {
+                    Button {
+                        deleteVault(vault: vault)
+                    } label : {
+                       Text("Delete")
+                    }
+                }
                 
+            }
+            .navigationTitle("List")
+            
+            
             Spacer()
         
-            Button(action: {
-                deleteAllVault(modelContext: modelContext)
-            }, label: {
-                Text("delete All")
-            })
             Button(action: {
                 rootDirURL = nil
             }, label: {
@@ -79,8 +75,10 @@ struct Home: View {
             })
             .navigationSplitViewColumnWidth(
                             min: 250, ideal: 220, max: 400)
+            
+            Spacer()
         } detail: {
-           
+
             if let selectedVault = selectedVault  {
                 VaultDetailView(vault: selectedVault)
             } else{
@@ -94,6 +92,18 @@ struct Home: View {
         
     }
     
+    private func deleteVault(vault: Vault) {
+        LocalFileManager.instance.deleteDirectory(vault.url)
+        deletedVault = vault
+        if let selection = self.deletedVault {
+            print(selection.name)
+            modelContext.delete(selection)
+        } else {
+            return
+        }
+    }
+    
+    
      private func deleteAllVault(modelContext: ModelContext) {
         do {
             try modelContext.delete(model: Vault.self)
@@ -105,7 +115,7 @@ struct Home: View {
     private func addVault(_ name: String) {
         LocalFileManager.instance.createDirectory(name)
         let dirURL: URL = LocalFileManager.instance.getDirectory(name)
-        let newVault: Vault = Vault(url: dirURL, images: nil)
+        let newVault: Vault = Vault(url: dirURL)
         modelContext.insert(newVault)
     }
     
@@ -116,7 +126,7 @@ struct Home: View {
         }
         deleteAllVault(modelContext: modelContext)
         for dirURL in dirs {
-            let vault: Vault = Vault(url: dirURL,images: nil)
+            let vault: Vault = Vault(url: dirURL)
             modelContext.insert(vault)
         }
     }

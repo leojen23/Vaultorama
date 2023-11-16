@@ -43,7 +43,7 @@ struct GridItemView: View {
            
                        Spacer()
                    }
-                    .background(Color.black.opacity(0.4))
+                    .background(Color.black.opacity(0.6))
 
                 } else {
                     EmptyView()

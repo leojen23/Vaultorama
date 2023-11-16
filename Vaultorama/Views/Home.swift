@@ -13,7 +13,6 @@ struct Home: View {
 //    @State private var vaultId: Vault.ID?
     @State private var selectedVault: Vault?
     @State private var showingAddAlert = false
-    @State private var showingDeletionAlert = false
     @State private var deletedVault: Vault? = nil
     @State private var name = ""
 
@@ -45,7 +44,8 @@ struct Home: View {
                     synchroniseVaults()
                 } label : {
                     Image(systemName: "arrow.triangle.2.circlepath")
-                }.buttonStyle(.borderless)
+                }
+                .buttonStyle(.borderless)
             }
             .padding()
 
@@ -68,10 +68,34 @@ struct Home: View {
             
             Spacer()
         
+//            Button(action: {
+//                rootDirURL = nil
+//            }, label: {
+//                HStack {
+//                    Image(systemName: "plus.circle")
+//                    Text("restore root dir")
+//                    Spacer()
+//                }.padding()
+//            })
             Button(action: {
-                rootDirURL = nil
+                showingAddAlert.toggle()
             }, label: {
-                Text("restore root dir")
+                HStack {
+                    Image(systemName: "plus.circle")
+                    Text("Add Vault")
+                    Spacer()
+                }.padding()
+            })
+            .buttonStyle(.borderless)
+            .alert("Create new Vault", isPresented: $showingAddAlert, actions: {
+                TextField("Vault Name", text: $name, prompt: Text("This field is required"))
+                Button("Create", action: {
+                    addVault(name)
+                }
+                ).disabled(name.isEmpty)
+                Button("Cancel", role: .cancel, action: {})
+            }, message: {
+                Text("Please give your vault a name.")
             })
             .navigationSplitViewColumnWidth(
                             min: 250, ideal: 220, max: 400)

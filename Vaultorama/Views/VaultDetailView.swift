@@ -55,7 +55,7 @@ struct GridView: View {
             }
             else {
                 Button("Add Files", systemImage: "photo.on.rectangle") {
-                    print("Add files")
+                    addFiles()
                 }
                 .padding()
                 .buttonStyle(.bordered)

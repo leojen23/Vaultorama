@@ -1,24 +1,18 @@
-//
-//  ContentView.swift
-//  Vaultorama
-//
-//  Created by Olivier Guillemot on 19/10/2023.
-//
-
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
+    
+    @AppStorage("rootDirURL") private var rootDirURL: URL?
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        if rootDirURL != nil{
+            Home()
+        } else {
+            AppLaunchView()
         }
-        .padding()
     }
 }
-
 #Preview {
     ContentView()
 }

@@ -1,17 +1,23 @@
-//
-//  VaultoramaApp.swift
-//  Vaultorama
-//
-//  Created by Olivier Guillemot on 19/10/2023.
-//
 
 import SwiftUI
+import SwiftData
 
 @main
 struct VaultoramaApp: App {
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .frame(minWidth: 300, minHeight: 400)
         }
+        .modelContainer(for: Vault.self)
+        .windowResizability(.contentSize)
+        
     }
+}
+
+
+
+#Preview {
+    ContentView()
 }
